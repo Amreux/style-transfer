@@ -1,0 +1,1 @@
+- [ ] Bonus: Additional mask for faces in the style images. 
