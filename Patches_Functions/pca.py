@@ -8,7 +8,9 @@ def pca(style_patches):
     eig_vals, eig_vecs = np.linalg.eig(cov_mat)
     sorted_eig_vals = np.argsort(eig_vals)[::-1]
     sorted_eig_vecs = eig_vecs[:, sorted_eig_vals]
-    k_eig_vecs = sorted_eig_vecs[:, :2]
+    cumulative_variance = np.cumsum(eig_vals[sorted_eig_vals]) / np.sum(eig_vals[sorted_eig_vals])
+    num_components = np.argmax(cumulative_variance >= 0.95) + 1
+    k_eig_vecs = sorted_eig_vecs[:, :num_components]
     proj_mat = k_eig_vecs
     pca_data = np.dot(centered_patches, proj_mat)
     return proj_mat, pca_data
