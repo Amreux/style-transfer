@@ -1,4 +1,4 @@
-from Common_Functions.CommonFunctions import *
+import numpy as np
 
 
 def pca(style_patches):
