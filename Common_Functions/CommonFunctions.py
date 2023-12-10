@@ -19,8 +19,6 @@ from skimage.color import label2rgb
 
 # patches
 from sklearn.feature_extraction.image import extract_patches_2d
-from patchify import patchify, unpatchify
-from sklearn.neighbors import NearestNeighbors
 
 # Edges
 from skimage.filters import sobel_h, sobel, sobel_v, roberts, prewitt
