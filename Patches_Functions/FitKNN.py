@@ -12,4 +12,5 @@ samples = [[10, 10, 12], [12,10, 10], [0, 0, 1]]
 nn = fit_nn(samples)
 print(nn.kneighbors([[7.5, 10, 10]])) # euclidean
 
-print(samples[nn.kneighbors([[9, 10, 12]])[1][0][0]])
+print(samples[nn.kneighbors([[9, 10, 12]])[1][0][0]], nn.kneighbors([[9, 10, 12]])[0][0][0])
+
