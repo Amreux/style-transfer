@@ -1,4 +1,4 @@
-from patchify import patchify, unpatchify
+from patchify import patchify
 
 
 def extract_patches(img, patch_size, sub_sampling_gaps):
