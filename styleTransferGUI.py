@@ -9,7 +9,7 @@ customtkinter.set_default_color_theme("blue")
 
 root_window=customtkinter.CTk()
 root_window.geometry("1200x400")
-root_window.title("password cracker")
+root_window.title("Style Transfer")
 root_window.resizable(width=False,height=False)
 
 root_window.grid_rowconfigure(list(range(0,11)),weight=1)
