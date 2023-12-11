@@ -93,6 +93,3 @@ images_frame.grid(row=1,column=0,rowspan=10,columnspan=10,padx=20,pady=(0,20),st
 
 ############################################################################################
 root_window.mainloop()
-
-
-
