@@ -1,6 +1,6 @@
 import numpy as np 
-import cv2 
-from matplotlib import pyplot as plt 
+import cv2
+
 
 
 def segement(image):
@@ -32,10 +32,8 @@ def segement(image):
     result_img = image * mask_forground[:, :, np.newaxis] 
 
  
-    result_mask = np.where((result_img>0),1,0).astype(float)
+    result_mask = np.where((result_img>0),0,0).astype(float)
+
+    # print(result_mask)
 
     return result_mask
-
-
-
-
