@@ -22,7 +22,7 @@ def segement(image):
     rectangle = (1,1,img_width,img_height)
 
     # run the grabcut algorithm for 8 iterations
-    cv2.grabCut(image, mask, rectangle, backgroundModel, foregroundModel, 10, cv2.GC_INIT_WITH_RECT) 
+    cv2.grabCut(image, mask, rectangle, backgroundModel, foregroundModel, 10, cv2.GC_INIT_WITH_MASK)
    
 
     # generate the forground mask
