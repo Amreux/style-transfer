@@ -16,9 +16,9 @@ from skimage.filters import median
 from skimage.feature import canny
 from skimage.measure import label
 from skimage.color import label2rgb
+import skimage.filters as f
+from scipy.ndimage import gaussian_filter
 
-# patches
-from sklearn.feature_extraction.image import extract_patches_2d
 
 # Edges
 from skimage.filters import sobel_h, sobel, sobel_v, roberts, prewitt
@@ -51,6 +51,3 @@ def showHist(img):
     imgHist = histogram(img, nbins=256)
 
     bar(imgHist[1].astype(np.uint8),imgHist[0], width=0.8, align='center')
-
-
-
