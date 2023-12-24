@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-# from Common_Functions.CommonFunctions import *
+from Common_Functions.CommonFunctions import *
 
 
 def segement(image):
@@ -54,7 +54,7 @@ def region_filling (image):
     can = np.stack((can,)*3, axis=-1)
     opening = np.stack((opening,)*3, axis=-1)
 
-    can = can.astype(np.float32)*0.8/255.0
+    can = can.astype(np.float32)*0.7/255.0
     print(np.max(can))
 
     # convert to float and set 1
@@ -105,3 +105,40 @@ def watershed (image):
     opening = cv2.morphologyEx(can, cv2.MORPH_OPEN, kernel, iterations=2)
     # show_images([opening])
     #show_images([can, opening])
+
+def ghaith (image):
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    gray=cv2.GaussianBlur(gray,(5,5),cv2.BORDER_DEFAULT)
+
+    # pixel_vals=image.reshape((-1,3))
+    # pixel_vals = np.float32(pixel_vals)
+
+
+
+    can=cv2.Canny(gray,20,60)
+    show_images([can])
+
+    # can=cv2.dilate(can,np.ones((1,1),np.uint8),iterations=3)
+    # show_images([can])
+
+    cnts, hierarchy = cv2.findContours(can, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    for c in cnts:
+        cv2.drawContours(can,[c], -1, color=(255, 255, 255), thickness=10)
+    show_images([can])
+    for i in range(2):
+        cnts, hierarchy = cv2.findContours(can, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+        cnts, hierarchy = cv2.findContours(can, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        for c in cnts:
+            cv2.drawContours(can,[c], -1, color=(255, 255, 255), thickness=cv2.FILLED)
+    show_images([can])
+    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (10,10))
+    can = cv2.morphologyEx(can, cv2.MORPH_OPEN, kernel, iterations=2)
+    # apply erosion
+    show_images([can])
+    can=cv2.erode(can,np.ones((5,5),np.uint8),iterations=3)
+    show_images([can])
+
+    can = np.stack((can.astype(np.float32)*0.6/255.0,)*3, axis=-1)
+
+    return can
