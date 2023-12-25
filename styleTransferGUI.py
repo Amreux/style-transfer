@@ -8,6 +8,9 @@ import skimage.io as io
 import cv2
 import numpy as np
 import imageio.v3 as iio
+from threading import Thread
+import time
+
 
 
 customtkinter.set_appearance_mode("dark")
@@ -17,10 +20,10 @@ root_window=customtkinter.CTk()
 root_window.geometry("1350x490")
 root_window.title("Style Transfer")
 root_window.resizable(width=False,height=False)
-
 root_window.grid_rowconfigure(list(range(0,11)),weight=1)
 root_window.grid_columnconfigure(list(range(0,10)),weight=1)
 ####################################################################################
+
 def is_image_file(filename):
     try:
         with Image.open(filename) as img:
@@ -82,23 +85,17 @@ def enable_advanced_options():
         mask_weight_entry.configure(state="disabled")
     return
 
-def start():
-    if(original_image_path.get()==""):
-        messagebox.showerror(title="Error",message="please select an original image")
-        return
-    if(style_image_path.get()==""):
-        messagebox.showerror(title="Error",message="please select a style image")
-        return
+
+def thread_task():
+    original_image_path_button.configure(state="disabled")
+    style_image_path_button.configure(state="disabled")
+    start_button.configure(state="disabled")
     X=io.imread(original_image_path.get(),).astype(np.float32)/255
-    
     X=cv2.resize(X, (400,400))
     style=io.imread(style_image_path.get()).astype(np.float32)/255
-
     style = cv2.resize(style, (np.shape(X)[0], np.shape(X)[1]))
-    
     patches_sizes = list(map(int,patch_sizes_value.get().split(",")))
     sampling_gaps = list(map(int,sampling_gaps_value.get().split(",")))
-
     I_irls = 5
     I_alg = 3
     out = st.style_transfer(X,style,float(regularization_value.get()),int(guassian_layers_value.get()),I_irls,patches_sizes,sampling_gaps,I_alg ,color_transfer_type_value.get(),segmentation_type_value.get(),float(mask_weight_value.get()))
@@ -107,7 +104,49 @@ def start():
     l3=Label(images_frame,image=photo)
     l3.image=photo
     l3.grid(row=1,column=8,rowspan=10,columnspan=3,padx=10,pady=30)
+    original_image_path_button.configure(state="normal")
+    style_image_path_button.configure(state="normal")
+    start_button.configure(state="normal")
     return
+
+
+def loading_bar(thread):
+    i=0
+    label2=customtkinter.CTkLabel(images_frame,text="Loading")
+    label2.grid(row=11,column=0,padx=10,pady=(0,10))
+    while(True):
+        if(thread.is_alive()==False):
+            break
+        i=i%4
+        if(i==0):
+            label2.configure(text="Loading.")
+        elif(i==1):
+            label2.configure(text="Loading..")
+        elif(i==2):
+            label2.configure(text="Loading...")
+        else:
+            label2.configure(text="Loading....")
+        i+=1   
+        time.sleep(0.5)
+    label2.configure(text="Done")
+    return
+
+def start():
+    if(original_image_path.get()==""):
+        messagebox.showerror(title="Error",message="please select an original image")
+        return
+    if(style_image_path.get()==""):
+        messagebox.showerror(title="Error",message="please select a style image")
+        return
+    global thread
+    thread = Thread(target = thread_task)
+    thread.start()
+    global thread2 
+    thread2 =Thread(target=loading_bar,args=(thread,))
+    thread2.start()
+   
+    return
+
 
 ############################################################################################
 original_image_path=customtkinter.Variable()
@@ -116,10 +155,11 @@ color_transfer_type_value=customtkinter.Variable(value="histogram")
 advanced_options_switch_value=customtkinter.Variable(value=False)
 patch_sizes_value=customtkinter.Variable(value="40,30")
 segmentation_type_value=customtkinter.Variable(value="edge")
-guassian_layers_value=customtkinter.Variable(value=3);
-regularization_value=customtkinter.Variable(value=0.8);
+guassian_layers_value=customtkinter.Variable(value=3)
+regularization_value=customtkinter.Variable(value=0.8)
 sampling_gaps_value=customtkinter.Variable(value="30,20")
-mask_weight_value=customtkinter.Variable(value=0.8);
+mask_weight_value=customtkinter.Variable(value=0.8)
+
 
 ############################################################################################
 main_frame=customtkinter.CTkFrame(root_window)
