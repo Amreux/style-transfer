@@ -112,23 +112,23 @@ def thread_task():
 
 def loading_bar(thread):
     i=0
-    label2=customtkinter.CTkLabel(images_frame,text="Loading")
+    label2=customtkinter.CTkLabel(images_frame,text="Generating Image")
     label2.grid(row=11,column=0,padx=10,pady=(0,10))
     while(True):
         if(thread.is_alive()==False):
             break
         i=i%4
         if(i==0):
-            label2.configure(text="Loading.")
+            label2.configure(text="Generating Image.")
         elif(i==1):
-            label2.configure(text="Loading..")
+            label2.configure(text="Generating Image..")
         elif(i==2):
-            label2.configure(text="Loading...")
+            label2.configure(text="Generating Image...")
         else:
-            label2.configure(text="Loading....")
+            label2.configure(text="Generating Image....")
         i+=1   
         time.sleep(0.5)
-    label2.configure(text="Done")
+    label2.configure(text="Image Generated Successfully!!!")
     return
 
 def start():
