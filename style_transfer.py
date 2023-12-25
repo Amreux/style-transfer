@@ -18,12 +18,6 @@ importlib.reload(seg)
 importlib.reload(ct)
 
 def style_transfer(content, style, r, L, Iirls, patch_sizes, subsampling_gaps, Ialg,color_transfer_type='histogram', segmentation_type = 'edge', seg_mask_weight = 0.8):
-    # apply color_transfer from the style to the content
-    # color_transfer_type -> 'histogram' applies match_histograms color transfer
-    # color_transfer_type -> 'lab' applies lab color transfer
-    # lab color transfer is better for less colorful images
-    # show_images([content],["content"])
-
     # apply segmentation to the content
     # segmentation_type -> 'edge' applies edge segmentation
     # segmentation_type -> 'GrabCut' applies face segmentation
@@ -32,7 +26,13 @@ def style_transfer(content, style, r, L, Iirls, patch_sizes, subsampling_gaps, I
     seg_mask = seg.segment(con, segmentation_type, seg_mask_weight)
     # show_images([seg_mask],["seg_mask"])
 
+    # apply color_transfer from the style to the content
+    # color_transfer_type -> 'histogram' applies match_histograms color transfer
+    # color_transfer_type -> 'lab' applies lab color transfer
+    # lab color transfer is better for less colorful images
+    # show_images([content],["content"])
     content = ct.color_transfer(content,style, color_transfer_type)
+
     # build gaussian pyramids
     content_pyramid_tuple = tuple(pyramid_gaussian(content, channel_axis=-1, max_layer=L, downscale=2))
     style_pyramid_tuple = tuple(pyramid_gaussian(style, channel_axis=-1, max_layer=L, downscale=2))
@@ -110,16 +110,3 @@ def style_transfer(content, style, r, L, Iirls, patch_sizes, subsampling_gaps, I
             X[-patch_sizes[0]:np.shape(X)[0], :, :] = padding_down
             X[:-patch_sizes[0], -patch_sizes[0]:, :] = padding_right
     return X
-
-# X=io.imread("imgs/content/content2.jpeg").astype(np.float32)/255
-# X=cv2.resize(X, (400,400))
-# style=io.imread("imgs/style/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg").astype(np.float32)/255
-# style = cv2.resize(style, (np.shape(X)[0], np.shape(X)[1]))
-# patches_sizes = [40, 30]
-# sampling_gaps = [30, 20]
-# r = 1
-# L_max = 3
-# I_irls = 5
-# I_alg = 3
-# out = style_transfer(X,style,r,L_max,I_irls,patches_sizes,sampling_gaps,I_alg ,'histogram', 'edge',0.8)
-# iio.imwrite(uri="imgs\output\content_styl53.jpg", image=(out[:-patches_sizes[0],:-patches_sizes[0],:]*255).astype(np.uint8))
