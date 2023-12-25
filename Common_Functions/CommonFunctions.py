@@ -43,11 +43,3 @@ def show_images(images, titles=None):
         n += 1
     fig.set_size_inches(np.array(fig.get_size_inches()) * n_ims)
     plt.show()
-
-
-def showHist(img):
-    # An "interface" to matplotlib.axes.Axes.hist() method
-    plt.figure()
-    imgHist = histogram(img, nbins=256)
-
-    bar(imgHist[1].astype(np.uint8),imgHist[0], width=0.8, align='center')

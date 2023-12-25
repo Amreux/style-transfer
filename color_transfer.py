@@ -1,7 +1,7 @@
 import numpy as np
 import cv2
 from skimage.exposure import match_histograms
-
+import skimage.io as io
 
 def color_transfer(content,style, type):
     if type == 'histogram':
