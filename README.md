@@ -27,14 +27,14 @@ The process of constructing Gaussian pyramids involves downscaling the resolutio
 
 ### 3) Initialization
 Following the completion of pre-processing functions and pyramid construction, the algorithm initiates X, the primary image subjected to algorithmic operations. Initially set as the content image, X undergoes an additional procedural step wherein a significant amount of Gaussian noise is applied.
-The deliberate injection of Gaussian noise into the content image, serving as the basis for subsequent operations, fostersa more pronounced and authentic style transfer experience, minimizing repetitive patterns and enhancing the overall stylistic coherence within the transformed image.
+The deliberate injection of Gaussian noise into the content image, serving as the basis for subsequent operations, fosters a more pronounced and authentic style transfer experience, minimizing repetitive patterns and enhancing the overall stylistic coherence within the transformed image.
 
 Patch matching on uniform white image with no noise             |  Patch matching on uniform image with added noise
 :-------------------------:|:-------------------------:
 ![image](https://github.com/Amreux/style-transfer/assets/96792115/75414132-0a15-42c2-8776-133aba79502d) | ![image](https://github.com/Amreux/style-transfer/assets/96792115/be4d6e92-55a3-4765-b9c8-617e1993cf5b)
 
 ### 4) Color Transfer
-The process of color transfer involves transposing the color palette from the style image onto the content image. Several methodologies were explored to accomplish this task, commencing with histogram matching, as advocated in Elad’s paper While histogram matching showcased efficacy in many instances, it occasionally exhibited limitations, leading to instances of extreme color transfer. To mitigate these challenges and ensure a more nuanced and controlled color transformation, an alternative approach was adopted. Subsequently, color transfer in LAB channels was implemented as an alternative methodology.
+The process of color transfer involves transposing the color palette from the style image onto the content image. Several methodologies were explored to accomplish this task, commencing with histogram matching, as advocated in Elad’s paper. While histogram matching showcased efficacy in many instances, it occasionally exhibited limitations, leading to instances of extreme color transfer. To mitigate these challenges and ensure a more nuanced and controlled color transformation, an alternative approach was adopted. Subsequently, color transfer in LAB channels was implemented as an alternative methodology.
 
 Original image             |  Style
 :-------------------------:|:-------------------------:
