@@ -1,5 +1,5 @@
 # style-transfer
-An image processing project where we implement style transfer, which is a type of content mixing of two images, via texture synthesis algorithms, we implemented Style Transfer based on Elad's et al. paper "Style-Transfer via Texture-Synthesis", which relies on classical methods. The original paper can be found at [original](https://arxiv.org/abs/1609.03057), and our documentation is available at [original doc](https://drive.google.com/file/d/19spwLj2io5snppn04L6t4C7YNug0SsMC/view).
+An image processing project where we implement style transfer, which is a type of content mixing of two images, via texture synthesis algorithms, we implemented Style Transfer based on Elad's et al. paper "Style-Transfer via Texture-Synthesis", which relies on classical methods. The original paper can be found at [original](https://arxiv.org/abs/1609.03057), and our documentation is available at [our doc](https://drive.google.com/file/d/19spwLj2io5snppn04L6t4C7YNug0SsMC/view).
 
 ## The Proposed Algorithm
 1) Segmentation
